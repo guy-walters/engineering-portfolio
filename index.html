@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guy Walters — Design & Manufacturing Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --border: #2a2a2a;
+    --accent: #c8a96e;
+    --text: #e8e4dc;
+    --text-dim: #7a7570;
+    --text-mid: #b0aa9f;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  header {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 6vw 8vh;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .header-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(200,169,110,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(192,57,43,0.05) 0%, transparent 50%),
+      linear-gradient(180deg, #0a0a0a 0%, #0d0c0b 100%);
+  }
+
+  .header-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.3) 70%, transparent 100%);
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-label::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    position: relative;
+    color: var(--text);
+  }
+
+  h1 span { display: block; color: var(--accent); }
+
+  .header-sub {
+    margin-top: 2.5rem;
+    max-width: 680px;
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+    position: relative;
+    border-left: 2px solid var(--accent);
+    padding-left: 1.5rem;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    position: relative;
+    flex-wrap: wrap;
+  }
+
+  .meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .meta-value { font-size: 0.85rem; color: var(--text-mid); }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 6vw;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  section {
+    padding: 8vh 6vw;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .section-intro {
+    max-width: 720px;
+    color: var(--text-mid);
+    font-size: 0.95rem;
+    margin-bottom: 4rem;
+    margin-top: 1rem;
+    padding-left: calc(0.65rem + 1.5rem + 1.5rem);
+  }
+
+  .phase-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .phase-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .card img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    filter: brightness(0.92) contrast(1.05);
+    transition: filter 0.3s;
+  }
+
+  .card:hover img { filter: brightness(1) contrast(1.05); }
+
+  .card-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-caption {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  .video-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .video-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+  }
+
+  .video-wrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-wrapper video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #000;
+  }
+
+  .video-card .card-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .callout {
+    background: var(--bg3);
+    border-left: 3px solid var(--accent);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    font-style: italic;
+  }
+
+  .tools-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .tool-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem;
+    background: var(--bg3);
+  }
+
+  .tool-chip.highlight {
+    color: var(--accent);
+    border-color: rgba(200,169,110,0.3);
+    background: rgba(200,169,110,0.05);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    nav a { padding: 1rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-bg"></div>
+  <div class="header-grid"></div>
+  <div class="header-label">Design & Manufacturing Engineering — Internship Portfolio</div>
+  <h1>Guy<br><span>Walters</span></h1>
+  <p class="header-sub">
+    During a hands-on engineering internship at a small company producing high-performance engine mounts for AMA Supercross race bikes, I owned the full product development cycle independently — from reverse engineering existing parts and redesigning for fitment and stiffness, through CAD, CAM programming, CNC machining, and fixture design. Every phase documented here was completed without an engineering supervisor, on live race components used by factory-supported and independent supercross teams.
+  </p>
+  <div class="header-meta">
+    <div class="meta-item">
+      <span class="meta-label">Application</span>
+      <span class="meta-value">AMA Supercross Race Bikes</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Platform</span>
+      <span class="meta-value">Ducati Desmo 450 · KTM 85</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Toolchain</span>
+      <span class="meta-value">Fusion 360 · SolidWorks · Haas SMM · BambuStudio</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Role</span>
+      <span class="meta-value">Sole Engineer</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#design">01 Design & CAD</a>
+  <a href="#cam">02 CAM & Simulation</a>
+  <a href="#setup">03 Machine Setup</a>
+  <a href="#machining">04 Machining</a>
+  <a href="#fixtures">05 Fixtures & Prototypes</a>
+  <a href="#finished">06 Finished Parts</a>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     01 — DESIGN & CAD
+══════════════════════════════════════════ -->
+<section id="design">
+  <div class="section-header">
+    <span class="section-num">01 ——</span>
+    <h2>Design & CAD</h2>
+  </div>
+  <p class="section-intro">
+    All engine mount geometry was designed or redesigned from scratch in SolidWorks and Fusion 360. The Ducati Desmo 450 upper engine mounts had pre-existing prototypes when I joined — I identified fitment errors, asymmetry issues, and stiffness problems, then rebuilt the models entirely. The CAD workflow was structured for parametric flexibility so design changes could be propagated quickly without rebuilding from scratch.
+  </p>
+
+  <div class="phase-label">Fusion 360 — CAM Operation Trees</div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/IQWvW6K.png" alt="Fusion 360 CAM full operation tree LH upper mount">
+      <div class="card-body">
+        <div class="card-tag">Fusion 360 CAM · LH Upper Mount — Two-Setup Operation Tree</div>
+        <p class="card-caption">Complete CAM program for the Ducati Desmo 450 left-hand upper engine mount in Fusion 360, showing two fully programmed setups with 30+ total toolpaths. Setup1 covers Op1 primary face features — facing, 2D adaptive roughing, contour profiling, drilling, bore, and parallel finishing. Setup2 covers Op2 second-side features using the custom soft jaw fixture. The full program was developed and debugged independently, with toolpath quality benchmarked against a professional machine shop.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/v1wqTZn.png" alt="Fusion 360 CAM RH upper mount with stock visualization">
+      <div class="card-body">
+        <div class="card-tag">Fusion 360 CAM · RH Upper Mount — Stock Visualization</div>
+        <p class="card-caption">Right-hand Ducati Desmo 450 upper engine mount shown in Fusion 360 CAM with the aluminum billet stock rendered around the finished part geometry, illustrating the full material removal envelope. The operation tree shows three setups covering facing, adaptive roughing, contouring, deep drilling, bore, pocket, parallel finishing, and chamfering across all part features. Stock visualization used to verify toolpaths clear the billet boundary correctly before running the program.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label">SolidWorks — Part Modeling</div>
+
+  <div class="fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/tHN40rR.jpeg" alt="SolidWorks 3D model of KTM 85 engine mount">
+      <div class="card-body">
+        <div class="card-tag">SolidWorks · Assembly Model — KTM 85 Mount</div>
+        <p class="card-caption">Full 3D model of the KTM 85 upper engine mount assembly in SolidWorks, showing the swept arm geometry, bolt bosses, lightening slot, and laser engraving fixture plate. Model annotation includes laser focus parameters and part number (KTSM-002). Visual congruence with the company's other parts was a design requirement embedded in the geometry from the start.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    The Ducati Desmo 450 mounts I inherited had fitment issues, broken symmetry, and incorrect stiffness distribution. I took physical measurements of the existing prototypes, OEM stock parts, and the bike frame, then redesigned the mounts from scratch — restoring bilateral symmetry, correcting mounting boss positions, and tuning wall thickness to achieve the target stiffness profile.
+  </div>
+
+  <div class="tools-row">
+    <span class="tool-chip highlight">SolidWorks</span>
+    <span class="tool-chip highlight">Autodesk Fusion 360</span>
+    <span class="tool-chip">Parametric Modeling</span>
+    <span class="tool-chip">Reverse Engineering</span>
+    <span class="tool-chip">Digital Calipers</span>
+    <span class="tool-chip">Stiffness Optimization</span>
+    <span class="tool-chip">Design for Manufacturability</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     02 — CAM & SIMULATION
+══════════════════════════════════════════ -->
+<section id="cam">
+  <div class="section-header">
+    <span class="section-num">02 ——</span>
+    <h2>CAM & Simulation</h2>
+  </div>
+  <p class="section-intro">
+    All toolpaths were programmed in Fusion 360 CAM with custom feed and speed presets developed specifically for the engine mount geometry. Every program was simulated for collision detection and material removal verification before running on the machine. For simple facing operations, G-code was also written by hand directly on the Haas controller.
+  </p>
+
+  <div class="phase-label">Fusion 360 — Feed & Speed & G-Code</div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/IjmXTgD.jpeg" alt="Fusion 360 CAM feed and speed parameters">
+      <div class="card-body">
+        <div class="card-tag">Fusion 360 CAM · Feed & Speed Parameters</div>
+        <p class="card-caption">Custom feed and speed preset developed for a bore operation on the engine mount — 4mm carbide ball end mill at 6,000 RPM, 1,219 mm/min cutting feedrate, 0.0508mm feed per tooth, flood coolant. Parameters tuned specifically for the mount geometry rather than pulled from defaults, balancing cycle time against surface finish quality.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/LpoO1Jj.jpeg" alt="Hand-written G-code on Haas controller">
+      <div class="card-body">
+        <div class="card-tag">Haas Controller · Manually Authored G-Code</div>
+        <p class="card-caption">Manually authored G-code facing program displayed on the Haas controller, written with full inline comments for readability and shop floor debugging. Program includes absolute mode, metric units, tool change to T6, WCS selection (G59), coolant control, facing passes, and a return-to-door sequence. Written in part to teach the shop owner how to run basic operations independently.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label" style="margin-top:2rem;">Fusion 360 — CAM Simulations</div>
+
+  <div class="grid-2 fade-in">
+    <div class="video-card">
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="https://i.imgur.com/zDB2jb6.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · CAM Simulation — RH Upper Mount Op1</div>
+        <p class="card-caption">Full Op1 CAM simulation for the Ducati Desmo 450 right-hand upper engine mount, with uncut stock shown in purple and finished surfaces revealed in green as each tool completes its pass. The operation tree sequences through the complete first-side program: a 2-inch face mill establishes the top surface, followed by 2D adaptive clearing with flat end mills of varying diameters, a 12mm drill for the primary cylinder bolt hole, bore milling of the two smaller frame mounting holes, a 4mm ball end mill parallel finishing pass across the full contoured surface, and chamfer operations around all bolt hole edges.</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="https://i.imgur.com/aJila9n.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · CAM Simulation — RH Upper Mount Op2</div>
+        <p class="card-caption">Op2 CAM simulation for the right-hand upper engine mount, showing the part flipped over with remaining stock in purple being cleared to reveal the finished back-face geometry in green. The operation sequence covers facing with the 2-inch face mill, adaptive clearing, parallel finishing with the 4mm ball end mill, and chamfering around all bolt hole edges. Together with the Op1 simulation, this documents the complete two-operation machining strategy for the Desmo 450 upper engine mounts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label" style="margin-top:2rem;">Fusion 360 — Concurrent Fixture Printing</div>
+
+  <div class="fade-in">
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/1Y2V38IzMbkcgYEYCGfDm6o93Ik33G6-n/preview" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · CAM Simulation & Concurrent Fixture Printing</div>
+        <p class="card-caption">Fusion 360 CAM simulation of the engine mount machining operation, verifying toolpaths and checking for collisions before sending the program to the machine. Camera pans to a Bambu Labs P1S mid-print, producing the custom soft jaws for Op2 — validating the machining program while simultaneously fabricating the tooling needed for the next operation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-row">
+    <span class="tool-chip highlight">Fusion 360 CAM</span>
+    <span class="tool-chip highlight">G-Code (Manual)</span>
+    <span class="tool-chip">2D Adaptive Clearing</span>
+    <span class="tool-chip">Parallel Finishing</span>
+    <span class="tool-chip">Bore Operations</span>
+    <span class="tool-chip">Chamfer Toolpaths</span>
+    <span class="tool-chip">Collision Simulation</span>
+    <span class="tool-chip">Feed & Speed Optimization</span>
+    <span class="tool-chip">Stock Visualization</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     03 — MACHINE SETUP
+══════════════════════════════════════════ -->
+<section id="setup">
+  <div class="section-header">
+    <span class="section-num">03 ——</span>
+    <h2>Machine Setup</h2>
+  </div>
+  <p class="section-intro">
+    The Haas Super Mini Mill was configured from scratch — tooling selected and sourced, tool length offsets and work coordinate systems established independently with no prior shop configuration to reference. Billet stock was measured, marked, and indicated in before each run.
+  </p>
+
+  <div class="phase-label">Billet Prep & WCS Establishment</div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/ti7Pkvf.jpeg" alt="Aluminum billet stock in vise with dimensions marked">
+      <div class="card-body">
+        <div class="card-tag">Haas VMC · Billet Stock Setup — Close View</div>
+        <p class="card-caption">Aluminum billet stock with measured dimensions (149.84mm × 30.50mm) and WCS origin marked directly on the stock face, seated in a Glacern vise prior to Op1. Writing dimensions on the billet provides a secondary check against the CAM setup and catches any stock sizing errors before the program runs.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/kAf7bfQ.jpeg" alt="Full vise and billet setup view">
+      <div class="card-body">
+        <div class="card-tag">Haas VMC · Billet Stock Setup — Full View</div>
+        <p class="card-caption">Full view of the Glacern vise on the Haas table with billet stock loaded, marked, and clamped. Flood coolant nozzles positioned for coverage across the full part envelope. All offsets loaded and verified before cycle start.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/NC3FKov.jpeg" alt="Haas test indicator tramming billet stock">
+      <div class="card-body">
+        <div class="card-tag">Haas VMC · Stock Tramming — Test Indicator</div>
+        <p class="card-caption">Haas test indicator used to verify the billet stock is sitting square in the vise and confirm the WCS origin is correctly located before running the program. Stock dimensions (124.52mm × 40.65mm) are marked on the face as a secondary verification. Tramming the stock eliminates angular error that would otherwise compound across the full part length.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/O4eHrJk.jpeg" alt="Haas test indicator close-up">
+      <div class="card-body">
+        <div class="card-tag">Haas VMC · Test Indicator — Close View</div>
+        <p class="card-caption">Close view of the Haas-branded test indicator contacting the billet face. The indicator reads within tolerance, confirming the stock is square and the origin corner is correctly positioned before the program is run.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/uJIApdk.jpeg" alt="Haas controller showing tool offsets and WCS">
+      <div class="card-body">
+        <div class="card-tag">Haas Controller · Tool Length Offsets & Work Coordinate Systems</div>
+        <p class="card-caption">Tool length offsets entered for a 9-tool setup on the Haas VMC, with G54 active as the primary work coordinate system. All offsets established by probing each tool individually after loading. The active WCS (G54: X–285.975, Y–79.692, Z–87.610) is highlighted, with G58 configured as a secondary offset for a separate operation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-row">
+    <span class="tool-chip highlight">Haas Super Mini Mill</span>
+    <span class="tool-chip highlight">Glacern Vise</span>
+    <span class="tool-chip">Test Indicator / Tramming</span>
+    <span class="tool-chip">Tool Length Offsets</span>
+    <span class="tool-chip">Work Coordinate Systems</span>
+    <span class="tool-chip">Billet Prep</span>
+    <span class="tool-chip">Flood Coolant Setup</span>
+    <span class="tool-chip">Tooling Selection & Sourcing</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     04 — MACHINING
+══════════════════════════════════════════ -->
+<section id="machining">
+  <div class="section-header">
+    <span class="section-num">04 ——</span>
+    <h2>Machining</h2>
+  </div>
+  <p class="section-intro">
+    All engine mount machining was performed on the Haas Super Mini Mill across two operations. Op1 establishes the primary face features — adaptive roughing, profile contouring, bore drilling, chamfering, and parallel finishing. Op2 machines the back face using custom soft jaw fixturing. Toolpath quality was benchmarked against the professional machine shop previously used and achieved comparable surface finish in roughly half the cycle time of previous intern attempts.
+  </p>
+
+  <div class="phase-label">Op1 — Primary Face Machining</div>
+
+  <div class="grid-2 fade-in">
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/1XV7BDXrje_K-0Xd0jN6UOU6Lq9e0xXqw/preview" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · 2D Adaptive Roughing — 10mm Bullnose End Mill</div>
+        <p class="card-caption">A 10mm diameter bullnose roughing end mill runs a 2D adaptive clearing operation across the top surface of the engine mount, stepping down to depth and clearing bulk material before finishing passes. The bullnose geometry reduces corner stress and allows aggressive material removal while maintaining tool life.</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/19mQkYwtUZnAzgrVDRQ8pW6Be3I21jFg9/preview" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · 2D Adaptive Perimeter Finishing — 5mm Flat End Mill</div>
+        <p class="card-caption">A 5mm diameter flat end mill runs a 2D adaptive clearing pass around the perimeter of the engine mount, establishing the final outer profile. Adaptive clearing maintains consistent tool engagement to protect the cutter and produce a uniform finish on the contoured edges.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 fade-in">
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/1Id6zamq9IP6UJ-PiMgiJIoZ562NqN6iw/preview" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · Cylinder Mount Bore Drilling — 12mm Drill</div>
+        <p class="card-caption">The Haas ATC cycles to a 12mm drill and executes the drilling operation for the primary cylinder mount bore — the largest and most structurally critical hole on the engine mount. This bore interfaces directly with the bike's cylinder, making positional accuracy essential for proper engine alignment on the frame.</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/1jD-Y0Dn1PUi6s6BOmscVD8d9dM-IF7r9/preview" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · Parallel Finishing — 4mm Ball End Mill</div>
+        <p class="card-caption">A 4mm ball end mill executes a parallel finishing operation across the full surface of the engine mount, making successive X-axis passes over the swept arm geometry, boss transitions, and central lightening slot. Flood coolant runs continuously to manage heat and evacuate chips.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 fade-in">
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/1q0iSeewUeq-OKdDfxZyer69zRYlpA9L0/preview" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · Chamfering — 3mm 45° Chamfer Bit</div>
+        <p class="card-caption">A 3mm 45-degree chamfer bit breaks the inner and outer edges of all mounting holes on the engine mount. Chamfering deburrs entry and exit edges to prevent stress concentration, eases hardware installation, and gives the finished part a clean, intentional appearance consistent with a race-quality component.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/Rw14Blk.jpeg" alt="Engine mount mid-Op1 in machine with coolant" style="aspect-ratio:4/3;object-fit:cover;width:100%;filter:brightness(0.92) contrast(1.05);">
+      <div class="card-body">
+        <div class="card-tag">Haas SMM · Desmo 450 — Op1 In-Process</div>
+        <p class="card-caption">Ducati Desmo 450 upper engine mount mid-Op1, clamped between steel Glacern soft jaws on parallels with flood coolant running. Parallel finishing passes are visible across the face and swept arm geometry.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/CtcLFGx.jpeg" alt="In-process machining with ATC visible">
+      <div class="card-body">
+        <div class="card-tag">Haas SMM · Op1 — ATC Tool Change In-Process</div>
+        <p class="card-caption">The Haas Super Mini Mill's 10-tool ATC carousel visible in frame during a tool change between operations. The engine mount remains clamped in the soft jaws while the machine indexes to the next tool — demonstrating the automated tool management that makes the 30+ operation program practical on a single setup.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/35CGoSw.jpeg" alt="Engine mount in machine from opposite end">
+      <div class="card-body">
+        <div class="card-tag">Haas SMM · Op1 — Boss & Frame Bore Geometry</div>
+        <p class="card-caption">View from the opposite end of the machine showing the boss and frame bore geometry mid-operation, confirming the part is holding position correctly through the full operation sequence. Mounting bosses and bore are fully formed at this stage; remaining passes complete the surface finish.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label" style="margin-top:2rem;">Op2 — Second Side Machining</div>
+
+  <div class="fade-in">
+    <div class="video-card">
+      <div class="video-wrapper">
+        <iframe src="https://drive.google.com/file/d/13GyELr4N05BgZgdzoI0946XIvk_349Mh/preview" allowfullscreen></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Video · Op2 — Y-Axis Parallel Finishing, Custom PLA Soft Jaw Fixturing</div>
+        <p class="card-caption">Second operation on the Ducati Desmo 450 upper engine mount, with the part rotated 90 degrees in the XY plane and clamped in custom PLA soft jaws printed to match the Op1 geometry exactly. A parallel finishing pass runs in the Y direction, contouring the back face of the mount. Using the Op1 geometry as the fixture datum ensures the two operations are referenced to each other, maintaining dimensional accuracy across both sides without a dedicated machined fixture.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-row">
+    <span class="tool-chip highlight">Haas Super Mini Mill</span>
+    <span class="tool-chip highlight">10-Tool ATC</span>
+    <span class="tool-chip">10mm Bullnose — Roughing</span>
+    <span class="tool-chip">5mm Flat — Perimeter Finish</span>
+    <span class="tool-chip">4mm Ball — Parallel Finish</span>
+    <span class="tool-chip">12mm Drill — Cylinder Bore</span>
+    <span class="tool-chip">3mm Chamfer Bit</span>
+    <span class="tool-chip">Flood Coolant</span>
+    <span class="tool-chip">6061 Aluminum</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     05 — FIXTURES & PROTOTYPES
+══════════════════════════════════════════ -->
+<section id="fixtures">
+  <div class="section-header">
+    <span class="section-num">05 ——</span>
+    <h2>Fixtures & Prototypes</h2>
+  </div>
+  <p class="section-intro">
+    A core part of my mandate was bringing prototyping in-house to eliminate the cost and inflexibility of outsourcing. 3D printed prototypes validated geometry before cutting metal. Custom fixtures — both printed and CAD-designed — were created to hold parts for second operations and laser engraving, replacing ad-hoc setups with repeatable, geometry-matched tooling.
+  </p>
+
+  <div class="phase-label">3D Printed Prototypes — Ducati Desmo 450</div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/3JQ73az.jpeg" alt="3D printed Desmo 450 LH and RH upper engine mount prototypes">
+      <div class="card-body">
+        <div class="card-tag">3D Print · Desmo 450 LH & RH Upper Mount Prototypes</div>
+        <p class="card-caption">Left and right-hand 3D printed prototypes of the upper engine mounts for the Ducati Desmo 450 AMA Supercross race bike, printed in-house on the Bambu Labs P1S. Prototypes validated hole spacing, boss geometry, and overall fitment before committing to machined aluminum — eliminating the batch size minimums and costly design change iterations of the previous outsourcing model.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/gW2W8KV.jpeg" alt="Desmo 450 prototypes — second angle">
+      <div class="card-body">
+        <div class="card-tag">3D Print · Desmo 450 Prototypes — Second Angle</div>
+        <p class="card-caption">Second view of the left and right-hand Desmo 450 prototype pair showing the bottom face geometry and frame mounting bore. The bilateral symmetry restored during the redesign is visible here — both parts are mirror images as intended, correcting the asymmetry present in the pre-existing prototypes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/8DfIadH.jpeg" alt="Profile view of 3D printed prototype arm thickness">
+      <div class="card-body">
+        <div class="card-tag">3D Print · Prototype — Arm Profile & Cross-Section</div>
+        <p class="card-caption">Profile view of the Desmo 450 printed prototype showing the swept arm geometry and cross-sectional thickness. The layered FDM texture makes wall thickness and material distribution clearly visible — useful for communicating stiffness intent and identifying areas needing revision before machining.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/k16lnmd.jpeg" alt="Side view of prototype showing arm thickness">
+      <div class="card-body">
+        <div class="card-tag">3D Print · Prototype — Side Profile</div>
+        <p class="card-caption">Side profile of the Desmo 450 LH prototype alongside the RH mount, showing the full arm length and boss height. Used to verify that the arm geometry would clear surrounding frame and engine components before cutting aluminum.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label" style="margin-top:2rem;">3D Printed Soft Jaws — Op2 Fixturing</div>
+
+  <div class="grid-3 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/Ej4oXmP.jpeg" alt="3D printed soft jaw blocks — component view">
+      <div class="card-body">
+        <div class="card-tag">3D Print · Soft Jaw Blocks — Component View</div>
+        <p class="card-caption">Two-part soft jaw set designed for the Haas Super Mini Mill. Each jaw half cradles one side of the engine mount geometry, constraining the part without marring Op1-machined surfaces. The sticky note documents a live engineering note: the Yamaha 20° taper height required tighter tolerancing on the next revision.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/9wjQDL7.jpeg" alt="Soft jaw blocks — side view">
+      <div class="card-body">
+        <div class="card-tag">3D Print · Soft Jaw Blocks — Side View</div>
+        <p class="card-caption">Side view of the two-part soft jaw set showing pocket depth and clearance geometry. Pockets are matched directly to the Op1 part geometry, ensuring the part seats correctly and is held securely for second-side machining operations.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/etuhXPu.jpeg" alt="Soft jaw assembly with engine mount installed">
+      <div class="card-body">
+        <div class="card-tag">3D Print · Soft Jaw Assembly with Mount Installed</div>
+        <p class="card-caption">Ducati Desmo 450 upper engine mount seated in the assembled soft jaw fixture, demonstrating fit and part registration before Op2 machining. The fixture locates the part using Op1 geometry as the datum, ensuring second-side features are positioned accurately relative to the first operation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label" style="margin-top:2rem;">Laser Engraving Fixture — KTM 85</div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/tHN40rR.jpeg" alt="SolidWorks CAD of KTM 85 laser engraving fixture">
+      <div class="card-body">
+        <div class="card-tag">SolidWorks · KTM 85 Laser Engraving Fixture — CAD</div>
+        <p class="card-caption">CAD design of the fixture plate used to hold KTM 85 engine mounts in a repeatable orientation for CNC laser logo engraving. Designed to ensure the company logo is engraved level and symmetric on each side, with laser parameters embedded in the model annotation (KTSM-002, Focus: +20mm, 12mm logo).</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/t2HU0t8.jpeg" alt="Anodized titanium engine mount on laser engraving fixture">
+      <div class="card-body">
+        <div class="card-tag">Grade 5 Ti · Anodized Mount on Laser Fixture</div>
+        <p class="card-caption">Completed anodized Grade 5 titanium engine mount seated on the KTM 85 laser engraving fixture. The heat-color rainbow finish results from the anodizing process — oxide layer thickness varies across the surface, producing interference colors that indicate treatment consistency. The fixture holds the part in the exact orientation required for symmetric logo placement.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-row">
+    <span class="tool-chip highlight">Bambu Labs P1S</span>
+    <span class="tool-chip highlight">BambuStudio Slicer</span>
+    <span class="tool-chip">PLA Soft Jaws</span>
+    <span class="tool-chip">Fixture Design</span>
+    <span class="tool-chip">Laser Engraving Setup</span>
+    <span class="tool-chip">In-House Prototyping</span>
+    <span class="tool-chip">FDM Functional Parts</span>
+    <span class="tool-chip">3D Printer Maintenance</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     06 — FINISHED PARTS
+══════════════════════════════════════════ -->
+<section id="finished">
+  <div class="section-header">
+    <span class="section-num">06 ——</span>
+    <h2>Finished Parts</h2>
+  </div>
+  <p class="section-intro">
+    The finished Ducati Desmo 450 upper engine mounts represent the complete design-to-production cycle — from an inherited prototype with fitment and symmetry issues, through redesign, in-house prototyping, and machining, to production-quality aluminum parts ready for fitment verification and track use.
+  </p>
+
+  <div class="phase-label">Op1 Complete — As-Machined Aluminum</div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/bb0gghM.jpeg" alt="Desmo 450 LH and RH mounts top view after Op1">
+      <div class="card-body">
+        <div class="card-tag">Machined 6061 Al · Desmo 450 — First vs. Second Attempt, Top View</div>
+        <p class="card-caption">First and second attempts at the Ducati Desmo 450 LH upper engine mount, shown side by side. The left part is the original inherited design machined on the first attempt — note the coarser parallel finishing passes, roughly rounded edges on the bolt holes, and less defined surface geometry. The right part is the redesigned version I developed independently, featuring a recentered relief slot, thinned cross-section for reduced stiffness and weight savings to improve front wheel grip, corrected fitment geometry, and a significantly finer surface finish with visibly tighter parallel pass spacing. Chamfered bolt hole edges on the redesign replace the approximate radii of the first attempt.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/Xq23d1w.jpeg" alt="Desmo 450 mounts lower view after Op1">
+      <div class="card-body">
+        <div class="card-tag">Machined 6061 Al · Desmo 450 — First vs. Second Attempt, Frame Bore View</div>
+        <p class="card-caption">Lower arm and frame mounting bore comparison between the first attempt (left) and the redesigned second version (right). The redesigned part shows cleaner boss geometry, a more uniform scallop pattern from tighter parallel finishing passes, and precisely chamfered bore edges. The thinned arm profile of the redesign is visible here — a deliberate stiffness reduction to allow more chassis flex and improve front wheel traction.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/O7Y7wby.jpeg" alt="Op1 mounts isometric view with coolant shimmer">
+      <div class="card-body">
+        <div class="card-tag">Machined 6061 Al · Desmo 450 — First vs. Second Attempt, Isometric View</div>
+        <p class="card-caption">Isometric comparison of both mount iterations. The flat top surfaces on the redesigned part (right) are notably cleaner — the facing operation produced a true flat datum, contrasted against the rougher top surface of the first attempt. The finer parallel pass spacing on the redesigned part produces a surface finish approaching the quality of the independent machine shop previously used for prototyping, achieved through refined toolpath parameters and improved fixturing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label" style="margin-top:2rem;">Prototype vs. Production Comparison</div>
+
+  <div class="grid-2 fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/1jN2571.jpeg" alt="3D printed prototype vs machined aluminum face view">
+      <div class="card-body">
+        <div class="card-tag">Comparison · 3D Print vs. Machined Aluminum — Face View</div>
+        <p class="card-caption">Direct side-by-side comparison of the 3D printed Desmo 450 LH upper engine mount prototype (black PLA) against the machined 6061 aluminum production part. The prototype validated hole spacing, boss geometry, and arm profile before any material was cut. The machined part shows the counterbored boss faces and surface finish quality achievable on the Haas SMM.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/ou6HWYK.jpeg" alt="3D printed prototype vs machined aluminum back view">
+      <div class="card-body">
+        <div class="card-tag">Comparison · 3D Print vs. Machined Aluminum — Back View</div>
+        <p class="card-caption">Back-face comparison showing Op2-machined features on the aluminum production part relative to the printed prototype. Counterbores and back-side clearances are fully resolved on the production part. The prototype's role was geometry validation only — once fitment was confirmed, production parts were machined to final specification.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-label" style="margin-top:2rem;">Work Environment</div>
+
+  <div class="fade-in">
+    <div class="card">
+      <img src="https://i.imgur.com/5P0RV5G.jpeg" alt="Engineer's workbench with billet, notebook, calipers and finished parts">
+      <div class="card-body">
+        <div class="card-tag">Pre-Op Planning — Engineer's Workbench</div>
+        <p class="card-caption">Workbench layout during a pre-operation setup session — aluminum billet stock with origin and dimensions marked in marker, notebook with handwritten tool settings and operation notes, digital calipers, finished titanium parts for reference, and a 1-2-3 block for setup verification. The notebook documents tool numbers, speeds, feeds, and pre-run checks. Diligent note-taking was a deliberate practice to ensure operations were reproducible and reasoning was traceable. A Kawasaki KX race bike is visible in the background — the end application context for this work.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-row">
+    <span class="tool-chip highlight">6061 Aluminum</span>
+    <span class="tool-chip highlight">Grade 5 Titanium</span>
+    <span class="tool-chip">Anodizing</span>
+    <span class="tool-chip">Two-Operation Machining</span>
+    <span class="tool-chip">Surface Finish Verification</span>
+    <span class="tool-chip">Ducati Desmo 450</span>
+    <span class="tool-chip">KTM 85</span>
+    <span class="tool-chip">Kawasaki KX</span>
+    <span class="tool-chip">AMA Supercross</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="padding:4vh 6vw;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+  <div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.05em;color:var(--text);">Guy Walters</div>
+    <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-top:0.25rem;">Design & Manufacturing Engineering</div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text-dim);letter-spacing:0.1em;">
+    Fusion 360 · SolidWorks · CAD/CAM · CNC Machining · GD&T · Fixture Design · FDM Prototyping · Reverse Engineering · G-Code · Design for Manufacturability
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
